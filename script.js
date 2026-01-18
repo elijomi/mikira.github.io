@@ -158,6 +158,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 function initializeScrollToTop() {
   const scrollToTopButton = document.querySelector('.scroll-to-top');
   
+  if (!scrollToTopButton) {
+    return;
+  }
+  
   // Show/hide button based on scroll position
   const toggleScrollButton = () => {
     if (window.scrollY > 300) {
