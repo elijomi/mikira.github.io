@@ -147,8 +147,8 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
@@ -162,8 +162,8 @@ img {
 }
 
 .hero-instagram img {
-  width: 64px;
-  height: 64px;
+  width: 40px;
+  height: 40px;
 }
 
 .eyebrow {
