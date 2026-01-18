@@ -3,6 +3,7 @@
   --bg: #000000;
   --text: #FFFFFF;
   --muted: rgba(255, 255, 255, 0.7);
+  --muted-bg: #B3B3B3;
   --accent: #C9E0C1;
   --accent-soft: rgba(201, 224, 193, 0.15);
   --accent-hover: rgba(201, 224, 193, 0.25);
@@ -18,7 +19,7 @@
 
 body {
   font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-  background: var(--white);
+  background: var(--muted-bg);
   color: var(--black);
   line-height: 1.6;
   padding: 0;
@@ -283,7 +284,7 @@ img {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(179, 179, 179, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,7 +305,7 @@ img {
   position: relative;
   max-width: 1200px;
   width: 100%;
-  background: var(--white);
+  background: var(--muted-bg);
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   padding: 32px;
