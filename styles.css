@@ -132,7 +132,7 @@ img {
 }
 
 .hero-instagram {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 64px;
@@ -140,7 +140,8 @@ img {
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
-  margin: 0 auto 32px;
+  float: right;
+  margin-left: 16px;
 }
 
 .hero-instagram:hover,
