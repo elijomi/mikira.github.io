@@ -105,12 +105,13 @@ img {
   max-width: 680px;
   margin-bottom: 48px;
   position: relative;
+  padding-left: 16px;
 }
 
 .hero::before {
   content: '';
   position: absolute;
-  left: -40px;
+  left: 0;
   top: 0;
   width: 4px;
   height: 100%;
@@ -312,8 +313,8 @@ img {
     align-items: flex-start;
   }
 
-  .hero::before {
-    left: -24px;
+  .hero {
+    padding-left: 12px;
   }
 
   .gallery {
