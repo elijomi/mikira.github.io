@@ -131,8 +131,18 @@ img {
   border-radius: 2px;
 }
 
-.hero-instagram {
+.hero-text-with-icon {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-text-with-icon .eyebrow {
+  margin-bottom: 0;
+}
+
+.hero-instagram {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 64px;
@@ -140,7 +150,8 @@ img {
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
-  margin: 0 auto 32px;
+  flex-shrink: 0;
+  margin-left: 16px;
 }
 
 .hero-instagram:hover,
