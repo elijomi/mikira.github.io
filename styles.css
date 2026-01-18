@@ -131,6 +131,16 @@ img {
   border-radius: 2px;
 }
 
+.hero-text-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-text-with-icon .eyebrow {
+  margin-bottom: 0;
+}
+
 .hero-instagram {
   display: inline-flex;
   align-items: center;
@@ -140,7 +150,7 @@ img {
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
-  float: right;
+  flex-shrink: 0;
   margin-left: 16px;
 }
 
