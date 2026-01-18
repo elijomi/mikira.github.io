@@ -99,7 +99,7 @@ img {
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   line-height: 1.1;
   margin-bottom: 16px;
-  white-space: nowrap;
+  letter-spacing: 0;
 }
 
 .subheader {
