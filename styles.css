@@ -101,6 +101,11 @@ img {
   font-weight: 500;
 }
 
+.logo {
+  width: 128px;
+  height: 128px;
+}
+
 .hero {
   max-width: 680px;
   margin-bottom: 48px;
@@ -138,8 +143,8 @@ img {
 }
 
 .hero-instagram img {
-  width: 16px;
-  height: 16px;
+  width: 64px;
+  height: 64px;
 }
 
 .eyebrow {
