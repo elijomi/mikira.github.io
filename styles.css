@@ -333,8 +333,8 @@ img {
 .lightbox-close {
   position: absolute;
   border: none;
-  background: var(--black);
-  color: var(--accent);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--white);
   font-size: 1.5rem;
   width: 44px;
   height: 44px;
@@ -350,6 +350,7 @@ img {
 .lightbox-close:hover,
 .lightbox-control:focus-visible,
 .lightbox-close:focus-visible {
+  background: rgba(0, 0, 0, 0.5);
   opacity: 1;
 }
 
