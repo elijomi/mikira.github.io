@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mikira Foto</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="top"></div>
+    <header class="site-header">
+      <a class="logo" href="#top" aria-label="Mikira home">Mikira</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#top">Hem</a>
+        <a class="nav-cta" href="#contact">Kontakt</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Sportfotograf</p>
+        <h1>Elin Johansson</h1>
+        <p class="subheader">Sportfotograf i Södra Dalarna.</p>
+      </section>
+
+      <section class="gallery" aria-label="Portfolio gallery">
+        <button class="gallery-item" type="button" data-index="0" aria-label="Open Stadium Lights">
+          <img
+            src="./assets/images/photo-01.svg"
+            alt="Floodlights over a stadium track"
+            loading="lazy"
+            width="1600"
+            height="1067"
+          />
+        </button>
+        <button class="gallery-item" type="button" data-index="1" aria-label="Open Sideline Sprint">
+          <img
+            src="./assets/images/photo-02.svg"
+            alt="Runner accelerating along the sideline"
+            loading="lazy"
+            width="1200"
+            height="1600"
+          />
+        </button>
+        <button class="gallery-item" type="button" data-index="2" aria-label="Open Goal Celebration">
+          <img
+            src="./assets/images/photo-03.svg"
+            alt="Team celebrating a late goal"
+            loading="lazy"
+            width="1600"
+            height="1000"
+          />
+        </button>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <p>© 2026 Mikira.</p>
+      <a class="instagram" href="https://instagram.com/eliniej" target="_blank" rel="noreferrer">
+        <span class="sr-only">Instagram</span>
+        <img src="./assets/icons/instagram.svg" alt="" aria-hidden="true" />
+      </a>
+    </footer>
+
+    <div class="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="lightbox-content" role="document">
+        <button class="lightbox-close" type="button" aria-label="Close">×</button>
+        <button class="lightbox-control prev" type="button" aria-label="Previous image">‹</button>
+        <img class="lightbox-image" src="" alt="" />
+        <button class="lightbox-control next" type="button" aria-label="Next image">›</button>
+        <p class="lightbox-caption" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
