@@ -361,6 +361,10 @@ img {
     gap: 16px;
   }
 
+  .logo {
+    display: none;
+  }
+
   .hero {
     padding-left: 12px;
   }
