@@ -119,6 +119,29 @@ img {
   border-radius: 2px;
 }
 
+.hero-instagram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  transition: background 0.2s ease;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.hero-instagram:hover,
+.hero-instagram:focus-visible {
+  background: var(--accent-hover);
+}
+
+.hero-instagram img {
+  width: 16px;
+  height: 16px;
+}
+
 .eyebrow {
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -178,7 +201,7 @@ img {
 
 .site-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-top: 1px solid rgba(201, 224, 193, 0.2);
   padding-top: 24px;
@@ -195,6 +218,14 @@ img {
   width: 100px;
   height: 1px;
   background: var(--accent);
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-content p {
+  margin: 4px 0;
 }
 
 .instagram {
