@@ -104,11 +104,17 @@ img {
 .logo {
   width: 128px;
   height: 128px;
+  flex-shrink: 0;
+}
+
+.hero-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 48px;
 }
 
 .hero {
-  max-width: 680px;
-  margin-bottom: 48px;
   position: relative;
   padding-left: 16px;
 }
@@ -125,7 +131,7 @@ img {
 }
 
 .hero-instagram {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 64px;
@@ -133,8 +139,7 @@ img {
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
-  vertical-align: middle;
-  margin-right: 8px;
+  margin: 0 auto 32px;
 }
 
 .hero-instagram:hover,
@@ -160,6 +165,7 @@ img {
   line-height: 1.1;
   margin-bottom: 16px;
   letter-spacing: 0;
+  color: var(--white);
 }
 
 .subheader {
@@ -347,6 +353,11 @@ img {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
+  }
+
+  .hero-wrapper {
+    flex-direction: column;
+    gap: 16px;
   }
 
   .hero {
