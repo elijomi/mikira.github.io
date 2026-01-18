@@ -309,23 +309,21 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   padding: 32px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 16px;
 }
 
 .lightbox-image {
   width: 100%;
   height: auto;
-  grid-column: 2;
   max-height: 70vh;
   object-fit: contain;
+  position: relative;
 }
 
 .lightbox-caption {
-  grid-column: 2;
   text-align: center;
   color: var(--black);
   opacity: 0.7;
@@ -333,29 +331,43 @@ img {
 
 .lightbox-control,
 .lightbox-close {
+  position: absolute;
   border: none;
-  background: rgba(0, 0, 0, 0.3);
-  color: var(--white);
+  background: var(--black);
+  color: var(--accent);
   font-size: 1.5rem;
   width: 44px;
   height: 44px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, opacity 0.2s ease;
   font-weight: bold;
+  z-index: 1;
+  opacity: 0.9;
 }
 
 .lightbox-control:hover,
 .lightbox-close:hover,
 .lightbox-control:focus-visible,
 .lightbox-close:focus-visible {
-  background: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+}
+
+.lightbox-control.prev {
+  left: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-control.next {
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .lightbox-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 48px;
+  right: 48px;
   font-size: 1.3rem;
 }
 
@@ -391,22 +403,20 @@ img {
   }
 
   .lightbox-content {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    padding: 16px;
   }
 
-  .lightbox-control.prev,
+  .lightbox-control.prev {
+    left: 16px;
+  }
+
   .lightbox-control.next {
-    grid-row: 2;
-    justify-self: center;
+    right: 16px;
   }
 
-  .lightbox-image {
-    grid-column: 1;
-  }
-
-  .lightbox-caption {
-    grid-column: 1;
+  .lightbox-close {
+    top: 16px;
+    right: 16px;
   }
 }
 
