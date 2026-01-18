@@ -175,9 +175,13 @@ img {
 .hero h1 {
   font-size: clamp(2.8rem, 5vw, 4.2rem);
   line-height: 1.1;
-  margin-bottom: 16px;
+  margin-bottom: 0px;
   letter-spacing: 0;
   color: var(--white);
+}
+
+.hero p {
+  display: inline-flex;
 }
 
 .subheader {
