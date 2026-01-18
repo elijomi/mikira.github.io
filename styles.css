@@ -123,8 +123,8 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   border-radius: 999px;
   background: var(--accent-soft);
   transition: background 0.2s ease;
