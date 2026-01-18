@@ -1,76 +1,154 @@
-const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
-const lightbox = document.querySelector(".lightbox");
-const lightboxImage = document.querySelector(".lightbox-image");
-const lightboxCaption = document.querySelector(".lightbox-caption");
-const closeButton = document.querySelector(".lightbox-close");
-const prevButton = document.querySelector(".lightbox-control.prev");
-const nextButton = document.querySelector(".lightbox-control.next");
+// Image metadata with dimensions for performance and preventing layout shift
+const imageMetadata = {
+  "photo-01.jpg": { width: 2048, height: 1538 },
+  "photo-02.jpg": { width: 2027, height: 2700 },
+  "photo-03.jpg": { width: 2700, height: 2027 },
+  "photo-04.jpg": { width: 2700, height: 2027 },
+  "photo-05.jpg": { width: 2027, height: 2700 },
+  "photo-06.jpg": { width: 2700, height: 2027 },
+  "photo-07.jpg": { width: 2027, height: 2700 },
+  "photo-08.jpg": { width: 2700, height: 2027 },
+  "photo-09.jpg": { width: 2700, height: 2027 },
+};
 
-const images = galleryItems.map((item) => {
-  const img = item.querySelector("img");
-  return {
-    src: img.getAttribute("src"),
-    alt: img.getAttribute("alt"),
-  };
-});
-
+let images = [];
 let currentIndex = 0;
 
-const openLightbox = (index) => {
-  currentIndex = index;
-  const { src, alt } = images[currentIndex];
-  lightboxImage.src = src;
-  lightboxImage.alt = alt;
-  lightboxCaption.textContent = alt;
-  lightbox.classList.add("is-open");
-  lightbox.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-};
-
-const closeLightbox = () => {
-  lightbox.classList.remove("is-open");
-  lightbox.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-};
-
-const showNext = () => {
-  currentIndex = (currentIndex + 1) % images.length;
-  openLightbox(currentIndex);
-};
-
-const showPrev = () => {
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  openLightbox(currentIndex);
-};
-
-galleryItems.forEach((item, index) => {
-  item.addEventListener("click", () => openLightbox(index));
-});
-
-closeButton.addEventListener("click", closeLightbox);
-nextButton.addEventListener("click", showNext);
-prevButton.addEventListener("click", showPrev);
-
-lightbox.addEventListener("click", (event) => {
-  if (event.target === lightbox) {
-    closeLightbox();
+// Fetch images from GitHub API
+async function fetchImages() {
+  const apiUrl = 'https://api.github.com/repos/elijomi/mikira.github.io/contents/assets/images';
+  
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error(`GitHub API returned ${response.status}`);
+    }
+    
+    const files = await response.json();
+    
+    // Filter for image files and sort alphabetically
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageFiles = files
+      .filter(file => {
+        const ext = file.name.toLowerCase().match(/\.[^.]+$/);
+        return ext && imageExtensions.includes(ext[0]);
+      })
+      .map(file => file.name)
+      .sort();
+    
+    return imageFiles;
+  } catch (error) {
+    console.error('Error fetching images from GitHub API:', error);
+    // Fallback to known images from metadata
+    return Object.keys(imageMetadata).sort();
   }
-});
+}
 
-document.addEventListener("keydown", (event) => {
-  if (!lightbox.classList.contains("is-open")) {
-    return;
-  }
+// Render gallery items dynamically
+function renderGallery(imageFiles) {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = ''; // Clear existing content
+  
+  imageFiles.forEach((filename, index) => {
+    const button = document.createElement('button');
+    button.className = 'gallery-item';
+    button.type = 'button';
+    button.setAttribute('data-index', index);
+    
+    const img = document.createElement('img');
+    img.src = `./assets/images/${filename}`;
+    img.loading = 'lazy';
+    
+    // Use metadata if available, otherwise use default dimensions
+    if (imageMetadata[filename]) {
+      img.width = imageMetadata[filename].width;
+      img.height = imageMetadata[filename].height;
+    }
+    
+    button.appendChild(img);
+    gallery.appendChild(button);
+  });
+  
+  // Store images for lightbox
+  images = imageFiles.map(filename => ({
+    src: `./assets/images/${filename}`,
+    alt: '',
+  }));
+}
 
-  if (event.key === "Escape") {
-    closeLightbox();
-  }
+// Initialize lightbox functionality
+function initializeLightbox() {
+  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
+  const lightbox = document.querySelector(".lightbox");
+  const lightboxImage = document.querySelector(".lightbox-image");
+  const lightboxCaption = document.querySelector(".lightbox-caption");
+  const closeButton = document.querySelector(".lightbox-close");
+  const prevButton = document.querySelector(".lightbox-control.prev");
+  const nextButton = document.querySelector(".lightbox-control.next");
 
-  if (event.key === "ArrowRight") {
-    showNext();
-  }
+  const openLightbox = (index) => {
+    currentIndex = index;
+    const { src, alt } = images[currentIndex];
+    lightboxImage.src = src;
+    lightboxImage.alt = alt;
+    lightboxCaption.textContent = alt;
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  };
 
-  if (event.key === "ArrowLeft") {
-    showPrev();
-  }
+  const closeLightbox = () => {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
+
+  const showNext = () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    openLightbox(currentIndex);
+  };
+
+  const showPrev = () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    openLightbox(currentIndex);
+  };
+
+  galleryItems.forEach((item, index) => {
+    item.addEventListener("click", () => openLightbox(index));
+  });
+
+  closeButton.addEventListener("click", closeLightbox);
+  nextButton.addEventListener("click", showNext);
+  prevButton.addEventListener("click", showPrev);
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!lightbox.classList.contains("is-open")) {
+      return;
+    }
+
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+
+    if (event.key === "ArrowRight") {
+      showNext();
+    }
+
+    if (event.key === "ArrowLeft") {
+      showPrev();
+    }
+  });
+}
+
+// Initialize gallery on page load
+document.addEventListener('DOMContentLoaded', async () => {
+  const imageFiles = await fetchImages();
+  renderGallery(imageFiles);
+  initializeLightbox();
 });
