@@ -151,4 +151,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   const imageFiles = await fetchImages();
   renderGallery(imageFiles);
   initializeLightbox();
+  initializeScrollToTop();
 });
+
+// Initialize scroll-to-top button
+function initializeScrollToTop() {
+  const scrollToTopButton = document.querySelector('.scroll-to-top');
+  
+  if (!scrollToTopButton) {
+    return;
+  }
+  
+  // Show/hide button based on scroll position
+  const toggleScrollButton = () => {
+    if (window.scrollY > 300) {
+      scrollToTopButton.classList.add('visible');
+    } else {
+      scrollToTopButton.classList.remove('visible');
+    }
+  };
+  
+  // Scroll to top smoothly when clicked
+  scrollToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Listen for scroll events
+  window.addEventListener('scroll', toggleScrollButton);
+  
+  // Check initial scroll position
+  toggleScrollButton();
+}
