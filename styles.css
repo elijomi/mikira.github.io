@@ -1,11 +1,13 @@
 :root {
-  color-scheme: light;
-  --bg: #f7f7f5;
-  --text: #0f172a;
-  --muted: #475569;
-  --accent: #0f172a;
-  --accent-soft: rgba(15, 23, 42, 0.08);
-  --white: #ffffff;
+  color-scheme: dark light;
+  --bg: #000000;
+  --text: #FFFFFF;
+  --muted: rgba(255, 255, 255, 0.7);
+  --accent: #C9E0C1;
+  --accent-soft: rgba(201, 224, 193, 0.15);
+  --accent-hover: rgba(201, 224, 193, 0.25);
+  --white: #FFFFFF;
+  --black: #000000;
 }
 
 * {
@@ -55,6 +57,23 @@ img {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover,
+.logo:focus-visible {
+  opacity: 0.85;
+}
+
+.logo-mark {
+  flex-shrink: 0;
+}
+
+.logo-text {
+  color: var(--text);
 }
 
 .site-nav {
@@ -85,6 +104,18 @@ img {
 .hero {
   max-width: 680px;
   margin-bottom: 48px;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  border-radius: 2px;
 }
 
 .eyebrow {
@@ -123,8 +154,9 @@ img {
   break-inside: avoid;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 4px 16px rgba(201, 224, 193, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(201, 224, 193, 0.2);
 }
 
 .gallery-item:focus-visible {
@@ -134,7 +166,8 @@ img {
 
 .gallery-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+  box-shadow: 0 8px 24px rgba(201, 224, 193, 0.2);
+  border-color: var(--accent);
 }
 
 .gallery-item img {
@@ -146,10 +179,21 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  border-top: 1px solid rgba(201, 224, 193, 0.2);
   padding-top: 24px;
   color: var(--muted);
   font-size: 0.95rem;
+  position: relative;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 1px;
+  background: var(--accent);
 }
 
 .instagram {
@@ -165,7 +209,7 @@ img {
 
 .instagram:hover,
 .instagram:focus-visible {
-  background: rgba(15, 23, 42, 0.16);
+  background: var(--accent-hover);
 }
 
 .instagram img {
@@ -177,7 +221,7 @@ img {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,6 +230,7 @@ img {
   transition: opacity 0.2s ease;
   padding: 32px 6vw;
   z-index: 10;
+  backdrop-filter: blur(8px);
 }
 
 .lightbox.is-open {
@@ -197,7 +242,8 @@ img {
   position: relative;
   max-width: 1200px;
   width: 100%;
-  background: var(--white);
+  background: var(--black);
+  border: 1px solid rgba(201, 224, 193, 0.3);
   border-radius: 20px;
   padding: 32px;
   display: grid;
@@ -225,20 +271,21 @@ img {
 .lightbox-close {
   border: none;
   background: var(--accent-soft);
-  color: var(--text);
+  color: var(--accent);
   font-size: 1.5rem;
   width: 44px;
   height: 44px;
   border-radius: 50%;
   cursor: pointer;
   transition: background 0.2s ease;
+  font-weight: bold;
 }
 
 .lightbox-control:hover,
 .lightbox-close:hover,
 .lightbox-control:focus-visible,
 .lightbox-close:focus-visible {
-  background: rgba(15, 23, 42, 0.2);
+  background: var(--accent-hover);
 }
 
 .lightbox-close {
@@ -263,6 +310,10 @@ img {
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
+  }
+
+  .hero::before {
+    left: -24px;
   }
 
   .gallery {
