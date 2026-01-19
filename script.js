@@ -84,8 +84,6 @@ function initializeLightbox() {
   const lightboxImage = document.querySelector(".lightbox-image");
   const lightboxCaption = document.querySelector(".lightbox-caption");
   const closeButton = document.querySelector(".lightbox-close");
-  const prevButton = document.querySelector(".lightbox-control.prev");
-  const nextButton = document.querySelector(".lightbox-control.next");
 
   const openLightbox = (index) => {
     currentIndex = index;
@@ -104,23 +102,11 @@ function initializeLightbox() {
     document.body.style.overflow = "";
   };
 
-  const showNext = () => {
-    currentIndex = (currentIndex + 1) % images.length;
-    openLightbox(currentIndex);
-  };
-
-  const showPrev = () => {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    openLightbox(currentIndex);
-  };
-
   galleryItems.forEach((item, index) => {
     item.addEventListener("click", () => openLightbox(index));
   });
 
   closeButton.addEventListener("click", closeLightbox);
-  nextButton.addEventListener("click", showNext);
-  prevButton.addEventListener("click", showPrev);
 
   lightbox.addEventListener("click", (event) => {
     if (event.target === lightbox) {
@@ -135,14 +121,6 @@ function initializeLightbox() {
 
     if (event.key === "Escape") {
       closeLightbox();
-    }
-
-    if (event.key === "ArrowRight") {
-      showNext();
-    }
-
-    if (event.key === "ArrowLeft") {
-      showPrev();
     }
   });
 }
