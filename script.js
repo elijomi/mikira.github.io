@@ -29,7 +29,10 @@ async function fetchImages(subfolder = 'sport') {
         imageGroups[baseName] = {};
       }
       
-      const ext = filename.match(/\.(avif|jpg|jpeg|png|gif|webp)$/i)[0].toLowerCase();
+      const extMatch = filename.match(/\.(avif|jpg|jpeg|png|gif|webp)$/i);
+      if (!extMatch) return; // Skip if no extension match (safety check)
+      
+      const ext = extMatch[0].toLowerCase();
       if (ext === '.avif') {
         imageGroups[baseName].avif = filename;
       } else if (ext === '.jpg' || ext === '.jpeg') {
@@ -76,6 +79,9 @@ function renderGallery(imageGroups, subfolder = 'sport') {
     } else if (group.avif) {
       // If only AVIF is available, use it as fallback too
       img.src = `./assets/images/${subfolder}/${group.avif}`;
+    } else {
+      // Safety check: skip this image group if no files are available
+      return;
     }
     img.loading = 'lazy';
     
