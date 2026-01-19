@@ -115,7 +115,6 @@ img {
   align-items: flex-start;
   gap: 16px;
   margin: 0 auto 48px;
-  max-width: 1200px;
   padding: 0 6vw;
 }
 
@@ -197,7 +196,6 @@ img {
   padding: 48px 6vw 0;
   display: flex;
   justify-content: center;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -246,7 +244,6 @@ img {
   column-count: 3;
   column-gap: 24px;
   padding: 24px 6vw 0;
-  max-width: 1200px;
   margin: 0 auto 64px;
 }
 
@@ -274,7 +271,6 @@ img {
   color: var(--black);
   font-size: 0.95rem;
   position: relative;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
