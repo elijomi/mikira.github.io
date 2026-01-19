@@ -14,6 +14,7 @@ const imageMetadata = {
 let images = [];
 let currentIndex = 0;
 let currentTab = 'sport'; // Default active tab
+let lightboxInitialized = false; // Track if lightbox has been initialized
 
 // Fetch images from GitHub API for a specific subfolder
 async function fetchImages(subfolder = 'sport') {
@@ -79,7 +80,6 @@ function renderGallery(imageFiles, subfolder = 'sport') {
 
 // Initialize lightbox functionality
 function initializeLightbox() {
-  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
   const lightbox = document.querySelector(".lightbox");
   const lightboxImage = document.querySelector(".lightbox-image");
   const lightboxCaption = document.querySelector(".lightbox-caption");
@@ -102,26 +102,38 @@ function initializeLightbox() {
     document.body.style.overflow = "";
   };
 
+  // Attach gallery item click listeners
+  attachGalleryListeners(openLightbox);
+
+  // Only initialize these listeners once
+  if (!lightboxInitialized) {
+    closeButton.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("is-open")) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+
+    lightboxInitialized = true;
+  }
+}
+
+// Attach click listeners to gallery items
+function attachGalleryListeners(openLightbox) {
+  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
   galleryItems.forEach((item, index) => {
     item.addEventListener("click", () => openLightbox(index));
-  });
-
-  closeButton.addEventListener("click", closeLightbox);
-
-  lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!lightbox.classList.contains("is-open")) {
-      return;
-    }
-
-    if (event.key === "Escape") {
-      closeLightbox();
-    }
   });
 }
 
