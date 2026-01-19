@@ -11,10 +11,7 @@ const imageMetadata = {
   "photo-09.jpg": { width: 2700, height: 2027 },
 };
 
-let images = [];
-let currentIndex = 0;
 let currentTab = 'sport'; // Default active tab
-let lightboxInitialized = false; // Track if lightbox has been initialized
 
 // Fetch images from GitHub API for a specific subfolder
 async function fetchImages(subfolder = 'sport') {
@@ -52,10 +49,8 @@ function renderGallery(imageFiles, subfolder = 'sport') {
   gallery.innerHTML = ''; // Clear existing content
   
   imageFiles.forEach((filename, index) => {
-    const button = document.createElement('button');
-    button.className = 'gallery-item';
-    button.type = 'button';
-    button.setAttribute('data-index', index);
+    const div = document.createElement('div');
+    div.className = 'gallery-item';
     
     const img = document.createElement('img');
     img.src = `./assets/images/${subfolder}/${filename}`;
@@ -67,73 +62,8 @@ function renderGallery(imageFiles, subfolder = 'sport') {
       img.height = imageMetadata[filename].height;
     }
     
-    button.appendChild(img);
-    gallery.appendChild(button);
-  });
-  
-  // Store images for lightbox
-  images = imageFiles.map(filename => ({
-    src: `./assets/images/${subfolder}/${filename}`,
-    alt: '',
-  }));
-}
-
-// Initialize lightbox functionality
-function initializeLightbox() {
-  const lightbox = document.querySelector(".lightbox");
-  const lightboxImage = document.querySelector(".lightbox-image");
-  const lightboxCaption = document.querySelector(".lightbox-caption");
-  const closeButton = document.querySelector(".lightbox-close");
-
-  const openLightbox = (index) => {
-    currentIndex = index;
-    const { src, alt } = images[currentIndex];
-    lightboxImage.src = src;
-    lightboxImage.alt = alt;
-    lightboxCaption.textContent = alt;
-    lightbox.classList.add("is-open");
-    lightbox.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  };
-
-  const closeLightbox = () => {
-    lightbox.classList.remove("is-open");
-    lightbox.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  };
-
-  // Attach gallery item click listeners
-  attachGalleryListeners(openLightbox);
-
-  // Only initialize these listeners once
-  if (!lightboxInitialized) {
-    closeButton.addEventListener("click", closeLightbox);
-
-    lightbox.addEventListener("click", (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (!lightbox.classList.contains("is-open")) {
-        return;
-      }
-
-      if (event.key === "Escape") {
-        closeLightbox();
-      }
-    });
-
-    lightboxInitialized = true;
-  }
-}
-
-// Attach click listeners to gallery items
-function attachGalleryListeners(openLightbox) {
-  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
-  galleryItems.forEach((item, index) => {
-    item.addEventListener("click", () => openLightbox(index));
+    div.appendChild(img);
+    gallery.appendChild(div);
   });
 }
 
@@ -142,7 +72,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Load initial tab (sport)
   const imageFiles = await fetchImages(currentTab);
   renderGallery(imageFiles, currentTab);
-  initializeLightbox();
   initializeScrollToTop();
   initializeTabs();
 });
@@ -179,7 +108,6 @@ function initializeTabs() {
       // Fetch and render images for the new tab
       const imageFiles = await fetchImages(currentTab);
       renderGallery(imageFiles, currentTab);
-      initializeLightbox(); // Re-initialize lightbox with new images
     });
   });
 }

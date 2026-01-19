@@ -248,28 +248,12 @@ img {
 
 .gallery-item {
   width: 100%;
-  border: none;
-  background: transparent;
-  padding: 0;
   margin: 0 0 24px;
-  cursor: pointer;
   break-inside: avoid;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.gallery-item:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 4px;
-}
-
-.gallery-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .gallery-item img {
@@ -328,79 +312,6 @@ img {
   fill: currentColor;
 }
 
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  padding: 32px 6vw;
-  z-index: 10;
-  backdrop-filter: blur(8px);
-}
-
-.lightbox.is-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.lightbox-content {
-  position: relative;
-  max-width: 1200px;
-  width: 100%;
-  background: var(--white);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.lightbox-image {
-  width: 100%;
-  height: auto;
-  max-height: 70vh;
-  object-fit: contain;
-  position: relative;
-}
-
-.lightbox-caption {
-  text-align: center;
-  color: var(--black);
-  opacity: 0.7;
-}
-
-.lightbox-close {
-  position: absolute;
-  border: none;
-  background: rgba(0, 0, 0, 0.3);
-  color: var(--white);
-  font-size: 1.5rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background 0.2s ease, opacity 0.2s ease;
-  font-weight: bold;
-  z-index: 1;
-  opacity: 0.9;
-  top: 48px;
-  right: 48px;
-  font-size: 1.3rem;
-}
-
-.lightbox-close:hover,
-.lightbox-close:focus-visible {
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 1;
-}
-
 @media (max-width: 980px) {
   .gallery {
     column-count: 2;
@@ -431,15 +342,6 @@ img {
   .gallery {
     column-count: 1;
   }
-
-  .lightbox-content {
-    padding: 16px;
-  }
-
-  .lightbox-close {
-    top: 16px;
-    right: 16px;
-  }
 }
 
 .scroll-to-top {
@@ -457,7 +359,7 @@ img {
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  z-index: 9; /* Below lightbox (z-index: 10) but above page content */
+  z-index: 9;
   opacity: 0;
   pointer-events: none;
   display: flex;
