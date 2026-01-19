@@ -52,7 +52,7 @@ img {
   justify-content: space-between;
   background: var(--black);
   color: var(--white);
-  padding: 32px 6vw 48px;
+  padding: 32px 0 48px;
 }
 
 .logo {
@@ -115,7 +115,8 @@ img {
   align-items: flex-start;
   gap: 16px;
   margin: 0 auto 48px;
-  max-width: 850px;
+  max-width: 1200px;
+  padding: 0 6vw;
 }
 
 .hero {
@@ -196,6 +197,8 @@ img {
   padding: 48px 6vw 0;
   display: flex;
   justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .tabs {
@@ -242,8 +245,9 @@ img {
 .gallery {
   column-count: 3;
   column-gap: 24px;
-  margin-bottom: 64px;
   padding: 24px 6vw 0;
+  max-width: 1200px;
+  margin: 0 auto 64px;
 }
 
 .gallery-item {
@@ -270,6 +274,8 @@ img {
   color: var(--black);
   font-size: 0.95rem;
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .site-footer::before {
