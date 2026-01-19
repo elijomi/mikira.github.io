@@ -13,10 +13,12 @@ const imageMetadata = {
 
 let images = [];
 let currentIndex = 0;
+let currentTab = 'sport'; // Default active tab
+let lightboxInitialized = false; // Track if lightbox has been initialized
 
-// Fetch images from GitHub API
-async function fetchImages() {
-  const apiUrl = 'https://api.github.com/repos/elijomi/mikira.github.io/contents/assets/images';
+// Fetch images from GitHub API for a specific subfolder
+async function fetchImages(subfolder = 'sport') {
+  const apiUrl = `https://api.github.com/repos/elijomi/mikira.github.io/contents/assets/images/${subfolder}`;
   
   try {
     const response = await fetch(apiUrl);
@@ -39,13 +41,13 @@ async function fetchImages() {
     return imageFiles;
   } catch (error) {
     console.error('Error fetching images from GitHub API:', error);
-    // Fallback to known images from metadata
+    // Fallback to known images from metadata if available
     return Object.keys(imageMetadata).sort();
   }
 }
 
 // Render gallery items dynamically
-function renderGallery(imageFiles) {
+function renderGallery(imageFiles, subfolder = 'sport') {
   const gallery = document.querySelector('.gallery');
   gallery.innerHTML = ''; // Clear existing content
   
@@ -56,7 +58,7 @@ function renderGallery(imageFiles) {
     button.setAttribute('data-index', index);
     
     const img = document.createElement('img');
-    img.src = `./assets/images/${filename}`;
+    img.src = `./assets/images/${subfolder}/${filename}`;
     img.loading = 'lazy';
     
     // Use metadata if available, otherwise use default dimensions
@@ -71,20 +73,17 @@ function renderGallery(imageFiles) {
   
   // Store images for lightbox
   images = imageFiles.map(filename => ({
-    src: `./assets/images/${filename}`,
+    src: `./assets/images/${subfolder}/${filename}`,
     alt: '',
   }));
 }
 
 // Initialize lightbox functionality
 function initializeLightbox() {
-  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
   const lightbox = document.querySelector(".lightbox");
   const lightboxImage = document.querySelector(".lightbox-image");
   const lightboxCaption = document.querySelector(".lightbox-caption");
   const closeButton = document.querySelector(".lightbox-close");
-  const prevButton = document.querySelector(".lightbox-control.prev");
-  const nextButton = document.querySelector(".lightbox-control.next");
 
   const openLightbox = (index) => {
     currentIndex = index;
@@ -103,59 +102,87 @@ function initializeLightbox() {
     document.body.style.overflow = "";
   };
 
-  // Carousel functionality temporarily disabled
-  // const showNext = () => {
-  //   currentIndex = (currentIndex + 1) % images.length;
-  //   openLightbox(currentIndex);
-  // };
+  // Attach gallery item click listeners
+  attachGalleryListeners(openLightbox);
 
-  // const showPrev = () => {
-  //   currentIndex = (currentIndex - 1 + images.length) % images.length;
-  //   openLightbox(currentIndex);
-  // };
+  // Only initialize these listeners once
+  if (!lightboxInitialized) {
+    closeButton.addEventListener("click", closeLightbox);
 
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("is-open")) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+    });
+
+    lightboxInitialized = true;
+  }
+}
+
+// Attach click listeners to gallery items
+function attachGalleryListeners(openLightbox) {
+  const galleryItems = Array.from(document.querySelectorAll(".gallery-item"));
   galleryItems.forEach((item, index) => {
     item.addEventListener("click", () => openLightbox(index));
-  });
-
-  closeButton.addEventListener("click", closeLightbox);
-  // Carousel navigation temporarily disabled
-  // nextButton.addEventListener("click", showNext);
-  // prevButton.addEventListener("click", showPrev);
-
-  lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (!lightbox.classList.contains("is-open")) {
-      return;
-    }
-
-    if (event.key === "Escape") {
-      closeLightbox();
-    }
-
-    // Carousel keyboard navigation temporarily disabled
-    // if (event.key === "ArrowRight") {
-    //   showNext();
-    // }
-
-    // if (event.key === "ArrowLeft") {
-    //   showPrev();
-    // }
   });
 }
 
 // Initialize gallery on page load
 document.addEventListener('DOMContentLoaded', async () => {
-  const imageFiles = await fetchImages();
-  renderGallery(imageFiles);
+  // Load initial tab (sport)
+  const imageFiles = await fetchImages(currentTab);
+  renderGallery(imageFiles, currentTab);
   initializeLightbox();
   initializeScrollToTop();
+  initializeTabs();
 });
+
+// Initialize tab functionality
+function initializeTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', async () => {
+      // Get the tab to switch to
+      const tabName = tab.getAttribute('data-tab');
+      
+      // If clicking the same tab, do nothing
+      if (tabName === currentTab) {
+        return;
+      }
+      
+      // Update active states
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      
+      // Update gallery panel aria-labelledby
+      const galleryPanel = document.querySelector('.gallery');
+      galleryPanel.setAttribute('aria-labelledby', `tab-${tabName}`);
+      
+      // Update current tab
+      currentTab = tabName;
+      
+      // Fetch and render images for the new tab
+      const imageFiles = await fetchImages(currentTab);
+      renderGallery(imageFiles, currentTab);
+      initializeLightbox(); // Re-initialize lightbox with new images
+    });
+  });
+}
 
 // Initialize scroll-to-top button
 function initializeScrollToTop() {
