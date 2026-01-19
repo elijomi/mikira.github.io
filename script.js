@@ -13,10 +13,11 @@ const imageMetadata = {
 
 let images = [];
 let currentIndex = 0;
+let currentTab = 'sport'; // Default active tab
 
-// Fetch images from GitHub API
-async function fetchImages() {
-  const apiUrl = 'https://api.github.com/repos/elijomi/mikira.github.io/contents/assets/images';
+// Fetch images from GitHub API for a specific subfolder
+async function fetchImages(subfolder = 'sport') {
+  const apiUrl = `https://api.github.com/repos/elijomi/mikira.github.io/contents/assets/images/${subfolder}`;
   
   try {
     const response = await fetch(apiUrl);
@@ -39,13 +40,16 @@ async function fetchImages() {
     return imageFiles;
   } catch (error) {
     console.error('Error fetching images from GitHub API:', error);
-    // Fallback to known images from metadata
-    return Object.keys(imageMetadata).sort();
+    // Fallback to known images from metadata for sport folder
+    if (subfolder === 'sport') {
+      return Object.keys(imageMetadata).sort();
+    }
+    return [];
   }
 }
 
 // Render gallery items dynamically
-function renderGallery(imageFiles) {
+function renderGallery(imageFiles, subfolder = 'sport') {
   const gallery = document.querySelector('.gallery');
   gallery.innerHTML = ''; // Clear existing content
   
@@ -56,7 +60,7 @@ function renderGallery(imageFiles) {
     button.setAttribute('data-index', index);
     
     const img = document.createElement('img');
-    img.src = `./assets/images/${filename}`;
+    img.src = `./assets/images/${subfolder}/${filename}`;
     img.loading = 'lazy';
     
     // Use metadata if available, otherwise use default dimensions
@@ -71,7 +75,7 @@ function renderGallery(imageFiles) {
   
   // Store images for lightbox
   images = imageFiles.map(filename => ({
-    src: `./assets/images/${filename}`,
+    src: `./assets/images/${subfolder}/${filename}`,
     alt: '',
   }));
 }
@@ -148,11 +152,50 @@ function initializeLightbox() {
 
 // Initialize gallery on page load
 document.addEventListener('DOMContentLoaded', async () => {
-  const imageFiles = await fetchImages();
-  renderGallery(imageFiles);
+  // Load initial tab (sport)
+  const imageFiles = await fetchImages(currentTab);
+  renderGallery(imageFiles, currentTab);
   initializeLightbox();
   initializeScrollToTop();
+  initializeTabs();
 });
+
+// Initialize tab functionality
+function initializeTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', async () => {
+      // Get the tab to switch to
+      const tabName = tab.getAttribute('data-tab');
+      
+      // If clicking the same tab, do nothing
+      if (tabName === currentTab) {
+        return;
+      }
+      
+      // Update active states
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      
+      // Update gallery panel aria-labelledby
+      const galleryPanel = document.querySelector('.gallery');
+      galleryPanel.setAttribute('aria-labelledby', `tab-${tabName}`);
+      
+      // Update current tab
+      currentTab = tabName;
+      
+      // Fetch and render images for the new tab
+      const imageFiles = await fetchImages(currentTab);
+      renderGallery(imageFiles, currentTab);
+      initializeLightbox(); // Re-initialize lightbox with new images
+    });
+  });
+}
 
 // Initialize scroll-to-top button
 function initializeScrollToTop() {
