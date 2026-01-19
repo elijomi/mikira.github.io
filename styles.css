@@ -23,6 +23,8 @@ body {
   color: var(--black);
   line-height: 1.6;
   padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 a {
