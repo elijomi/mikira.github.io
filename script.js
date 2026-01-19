@@ -1,16 +1,3 @@
-// Image metadata with dimensions for performance and preventing layout shift
-const imageMetadata = {
-  "photo-01.jpg": { width: 2048, height: 1538 },
-  "photo-02.jpg": { width: 2027, height: 2700 },
-  "photo-03.jpg": { width: 2700, height: 2027 },
-  "photo-04.jpg": { width: 2700, height: 2027 },
-  "photo-05.jpg": { width: 2027, height: 2700 },
-  "photo-06.jpg": { width: 2700, height: 2027 },
-  "photo-07.jpg": { width: 2027, height: 2700 },
-  "photo-08.jpg": { width: 2700, height: 2027 },
-  "photo-09.jpg": { width: 2700, height: 2027 },
-};
-
 let currentTab = 'sport'; // Default active tab
 
 // Fetch images from GitHub API for a specific subfolder
@@ -26,7 +13,7 @@ async function fetchImages(subfolder = 'sport') {
     const files = await response.json();
     
     // Filter for image files and sort alphabetically
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+    const imageExtensions = ['.avif', '.jpg', '.jpeg', '.png', '.gif', '.webp'];
     const imageFiles = files
       .filter(file => {
         const ext = file.name.toLowerCase().match(/\.[^.]+$/);
