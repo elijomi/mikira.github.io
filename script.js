@@ -40,11 +40,8 @@ async function fetchImages(subfolder = 'sport') {
     return imageFiles;
   } catch (error) {
     console.error('Error fetching images from GitHub API:', error);
-    // Fallback to known images from metadata for sport folder
-    if (subfolder === 'sport') {
-      return Object.keys(imageMetadata).sort();
-    }
-    return [];
+    // Fallback to known images from metadata if available
+    return Object.keys(imageMetadata).sort();
   }
 }
 
