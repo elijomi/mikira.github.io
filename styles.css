@@ -354,6 +354,12 @@ img {
   opacity: 1;
 }
 
+/* Carousel navigation temporarily disabled */
+.lightbox-control.prev,
+.lightbox-control.next {
+  display: none;
+}
+
 .lightbox-control.prev {
   left: 48px;
   top: 50%;
