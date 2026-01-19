@@ -103,23 +103,25 @@ function initializeLightbox() {
     document.body.style.overflow = "";
   };
 
-  const showNext = () => {
-    currentIndex = (currentIndex + 1) % images.length;
-    openLightbox(currentIndex);
-  };
+  // Carousel functionality temporarily disabled
+  // const showNext = () => {
+  //   currentIndex = (currentIndex + 1) % images.length;
+  //   openLightbox(currentIndex);
+  // };
 
-  const showPrev = () => {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    openLightbox(currentIndex);
-  };
+  // const showPrev = () => {
+  //   currentIndex = (currentIndex - 1 + images.length) % images.length;
+  //   openLightbox(currentIndex);
+  // };
 
   galleryItems.forEach((item, index) => {
     item.addEventListener("click", () => openLightbox(index));
   });
 
   closeButton.addEventListener("click", closeLightbox);
-  nextButton.addEventListener("click", showNext);
-  prevButton.addEventListener("click", showPrev);
+  // Carousel navigation temporarily disabled
+  // nextButton.addEventListener("click", showNext);
+  // prevButton.addEventListener("click", showPrev);
 
   lightbox.addEventListener("click", (event) => {
     if (event.target === lightbox) {
@@ -136,13 +138,14 @@ function initializeLightbox() {
       closeLightbox();
     }
 
-    if (event.key === "ArrowRight") {
-      showNext();
-    }
+    // Carousel keyboard navigation temporarily disabled
+    // if (event.key === "ArrowRight") {
+    //   showNext();
+    // }
 
-    if (event.key === "ArrowLeft") {
-      showPrev();
-    }
+    // if (event.key === "ArrowLeft") {
+    //   showPrev();
+    // }
   });
 }
 
