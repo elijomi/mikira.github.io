@@ -42,8 +42,20 @@ async function fetchImages(subfolder = 'sport') {
       }
     });
     
-    // Sort by base name
-    return Object.keys(imageGroups).sort().map(baseName => imageGroups[baseName]);
+    // Sort by base name in reversed order (numeric if possible, otherwise alphabetical)
+    return Object.keys(imageGroups).sort((a, b) => {
+      // Extract numbers from the end of the filename for numeric comparison
+      const numA = a.match(/(\d+)$/);
+      const numB = b.match(/(\d+)$/);
+      
+      if (numA && numB) {
+        // Both have numbers at the end, compare numerically in descending order
+        return parseInt(numB[1], 10) - parseInt(numA[1], 10);
+      }
+      
+      // Fall back to reversed alphabetical comparison
+      return b.localeCompare(a);
+    }).map(baseName => imageGroups[baseName]);
   } catch (error) {
     console.error('Error fetching images from GitHub API:', error);
     return [];
