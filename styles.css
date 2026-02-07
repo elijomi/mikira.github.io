@@ -166,9 +166,14 @@ img {
   height: 40px;
 }
 
+.pixieset-link-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 6vw 32px;
+}
+
 .pixieset-link {
   display: inline-block;
-  margin-top: 24px;
   padding: 12px 24px;
   border-radius: 999px;
   background: var(--accent);
