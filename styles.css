@@ -169,7 +169,7 @@ img {
 .pixieset-link-container {
   display: flex;
   justify-content: center;
-  padding: 0 6vw 32px;
+  padding: 48px 6vw 32px;
 }
 
 .pixieset-link {
