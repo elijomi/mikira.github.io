@@ -166,6 +166,26 @@ img {
   height: 40px;
 }
 
+.pixieset-link {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--black);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+}
+
+.pixieset-link:hover,
+.pixieset-link:focus-visible {
+  background: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 224, 193, 0.4);
+}
+
 .eyebrow {
   font-size: 0.85rem;
   text-transform: uppercase;
